@@ -3,10 +3,10 @@ Allow: /
 Allow: /price.html
 Allow: /kids.html
 Disallow: /api/
-Disallow: /js/
-Disallow: /css/
-Disallow: /img/interior-
 Disallow: /img/clinic-
+
+# og:image живёт в /img/interior-… и должен быть доступен краулерам соцсетей;
+#Disallow: /img/interior-
 
 Host: https://academicals.ru
 Sitemap: https://academicals.ru/sitemap.xml

@@ -203,17 +203,32 @@ def valid(d):
         return "проверьте e-mail"
     return None
 
+# Заголовки безопасности ответа (см. аудит security-*)
+SEC_HEADERS = [
+    ("X-Frame-Options", "SAMEORIGIN"),
+    ("X-Content-Type-Options", "nosniff"),
+    ("Referrer-Policy", "strict-origin-when-cross-origin"),
+    ("Permissions-Policy", "camera=(), microphone=(), geolocation=()"),
+]
+
 class H(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
+    server_version = "webserver"  # не раскрываем стек (security-info-disclosure)
+    sys_version = ""
 
     def log_message(self, fmt, *a):
         print("[%s] %s" % (datetime.now().strftime("%H:%M:%S"), fmt % a))
+
+    def _sec(self):
+        for k, v in SEC_HEADERS:
+            self.send_header(k, v)
 
     def _json(self, code, obj):
         data = json.dumps(obj, ensure_ascii=False).encode("utf-8")
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(data)))
+        self._sec()
         self.end_headers()
         self.wfile.write(data)
 
@@ -236,10 +251,17 @@ class H(BaseHTTPRequestHandler):
             return self._json(403, {"error": "forbidden"})
         fp = os.path.join(SITE, rel if rel != "." else "index.html")
         if not os.path.exists(fp):
+            nf = os.path.join(SITE, "404.html")
             self.send_response(404)
-            body = b"<h1>404</h1>"
+            if os.path.exists(nf):
+                body = open(nf, "rb").read()
+                ctype = "text/html; charset=utf-8"
+            else:
+                body = b"<h1>404</h1>"
+                ctype = "text/html; charset=utf-8"
+            self.send_header("Content-Type", ctype)
             self.send_header("Content-Length", str(len(body)))
-            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self._sec()
             self.end_headers()
             return self.wfile.write(body)
         ext = {"html": "text/html; charset=utf-8", "css": "text/css", "js": "text/javascript",
@@ -250,6 +272,7 @@ class H(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", ext)
         self.send_header("Content-Length", str(os.path.getsize(fp)))
+        self._sec()
         self.end_headers()
         with open(fp, "rb") as f:
             self.wfile.write(f.read())

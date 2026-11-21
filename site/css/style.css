@@ -293,3 +293,8 @@ footer .bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:40px;paddin
   .breath-circle{transition:none}
   .reveal{opacity:1;transform:none;transition:none}
 }
+
+/* skip-link: доступна только с клавиатуры */
+.skip{position:absolute;left:-9999px;top:0;z-index:99;padding:12px 20px;background:var(--green-dark,var(--green));color:#fff;border-radius:0 0 12px 0;font-weight:600;text-decoration:none}
+.skip:focus{left:0}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}

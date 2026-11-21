@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
-<title>Детский психиатр и детский психолог в Москве | Детская «Академика»</title>
-<meta name="description" content="Помощь детям и подросткам: детский психиатр (первый приём 80 минут), детские клинические психологи, логопед, нейрокогнитивный тренинг, группы для подростков. Конфиденциально, без учёта.">
+<title>Детский психиатр и психолог в Москве — «Академика»</title>
+<meta name="description" content="Детский психиатр (первый приём 80 минут), детские клинические психологи, логопед, группы для подростков. Конфиденциально, без постановки на учёт.">
 <meta name="theme-color" content="#2f6f5e">
 <link rel="canonical" href="https://academicals.ru/kids.html">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:site_name" content="Академика">
-<meta property="og:title" content="Детский психиатр и детский психолог в Москве | Детская «Академика»">
-<meta property="og:description" content="Помощь детям и подросткам: детский психиатр (первый приём 80 минут), детские клинические психологи, логопед, нейрокогнитивный тренинг, группы для подростков. Конфиденциально, без учёта.">
+<meta property="og:title" content="Детский психиатр и психолог в Москве — «Академика»">
+<meta property="og:description" content="Детский психиатр (первый приём 80 минут), детские клинические психологи, логопед, группы для подростков. Конфиденциально, без постановки на учёт.">
 <meta property="og:url" content="https://academicals.ru/kids.html">
 <meta property="og:image" content="https://academicals.ru/img/interior-cabinet.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -21,6 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
+<link rel="llms" href="/llms.txt">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,9 +47,20 @@
   "priceRange": "от 3 000 ₽ до 150 000 ₽"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://academicals.ru/"},
+    {"@type": "ListItem", "position": 2, "name": "Детям", "item": "https://academicals.ru/kids.html"}
+  ]
+}
+</script>
 </head>
 <body>
 
+<a class="skip" href="#content">Перейти к содержимому</a>
 <header class="site">
   <div class="wrap nav">
     <a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#e79b4f"/><text x="32" y="46" font-size="36" text-anchor="middle" fill="#fff" font-family="Georgia">а</text></svg>академика <span style="font-size:.8rem;color:var(--terra);font-family:var(--font-body);font-weight:700">· детская</span></a>
@@ -58,7 +70,7 @@
     <button class="burger" aria-label="Меню"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#20312e" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
 </header>
-<main>
+<main id="content">
 
 <section class="hero" style="padding:88px 0 96px;background:linear-gradient(160deg,#b8653f,#e79b4f 55%,#eeb06b)">
   <div class="wrap">
@@ -79,11 +91,11 @@
     <h2>Как ты сегодня? Нажми на настроение</h2>
     <p class="lede" style="margin-inline:auto">Это не тест-диагноз — просто подсказки. Настоящий диагноз ставит врач, но поговорить о чувствах можно уже сейчас.</p>
     <div class="moods" id="moods">
-      <button class="mood" data-mood="🙂" title="Хорошо">🙂</button>
-      <button class="mood" data-mood="😟" title="Тревожно">😟</button>
-      <button class="mood" data-mood="😠" title="Злой">😠</button>
-      <button class="mood" data-mood="😴" title="Устал">😴</button>
-      <button class="mood" data-mood="🤔" title="Много думаю">🤔</button>
+      <button class="mood" data-mood="🙂" aria-label="Хорошо">🙂</button>
+      <button class="mood" data-mood="😟" aria-label="Тревожно">😟</button>
+      <button class="mood" data-mood="😠" aria-label="Злой">😠</button>
+      <button class="mood" data-mood="😴" aria-label="Устал">😴</button>
+      <button class="mood" data-mood="🤔" aria-label="Много думаю">🤔</button>
     </div>
     <div class="mood-note" id="mood-note"></div>
   </div>
@@ -179,7 +191,7 @@
       <h3>📞 Если страшно прямо сейчас</h3>
       <p>Ты не один, и помощь бывает бесплатной и круглосуточной. Это не вместо клиники и не вместо врача — это чтобы рядом был человек в эту самую минуту.</p>
       <ul>
-        <li><span class="num"><a href="tel:88002000122">8-800-2000-122</a></span><small>детям, подросткам и родителям — телефон доверия: бесплатно, анонимно, круглосуточно</small></li>
+        <li><span class="num"><a href="tel:+78002000122">8-800-2000-122</a></span><small>детям, подросткам и родителям — телефон доверия: бесплатно, анонимно, круглосуточно</small></li>
         <li><span class="num"><a href="tel:+7495051">051 / +7 (495) 051</a></span><small>взрослым в Москве — Московская служба психологической помощи: бесплатно, круглосуточно</small></li>
         <li><span class="num"><a href="tel:112">112</a></span><small>если кому-то угрожает опасность прямо сейчас</small></li>
         <li><span class="num"><a href="tel:103">103</a></span><small>скорая медицинская помощь</small></li>
@@ -205,20 +217,20 @@
 <dialog id="book-modal">
   <div class="modal-head" style="background:#b8653f"><h3>Онлайн-запись для ребёнка</h3><button class="modal-close" id="book-close" aria-label="Закрыть">✕</button></div>
   <div class="stepper" aria-hidden="true"><div class="on"></div><div></div><div></div><div></div></div>
-  <form class="book" id="book-form">
+  <form class="book" id="book-form" method="post" action="/api/booking">
     <div class="form-msg" id="book-msg"></div>
     <div data-step="0" class="vis">
-      <div class="fld"><label>Кому нужна помощь?</label><div id="f-who" style="display:grid;gap:10px"></div></div>
+      <div class="fld"><label>Кому нужна помощь?</label><div id="f-who" role="group" aria-label="Кому нужна помощь" style="display:grid;gap:10px"></div></div>
     </div>
     <div data-step="1">
-      <div class="fld"><label>Выберите услугу</label><div id="svc-list" style="display:grid;gap:10px;max-height:320px;overflow:auto"></div></div>
+      <div class="fld"><label>Выберите услугу</label><div id="svc-list" role="group" aria-label="Выберите услугу" style="display:grid;gap:10px;max-height:320px;overflow:auto"></div></div>
     </div>
     <div data-step="2">
-      <div class="fld"><label>Дата приёма</label><input type="date" id="f-date" required><div class="hint">Приёмы: Пн–Вс 9:00–19:30. Если в этот день всё занято — предложим ближайший.</div></div>
-      <div class="fld"><label>Свободное время</label><div class="slots" id="slot-list"></div></div>
+      <div class="fld"><label for="f-date">Дата приёма</label><input type="date" id="f-date" required><div class="hint">Приёмы: Пн–Вс 9:00–19:30. Если в этот день всё занято — предложим ближайший.</div></div>
+      <div class="fld"><label>Свободное время</label><div class="slots" id="slot-list" role="group" aria-label="Свободное время"></div></div>
     </div>
     <div data-step="3">
-            <div class="fld"><label>Врач (если знаете, к кому)</label>
+            <div class="fld"><label for="f-doctor">Врач (если знаете, к кому)</label>
         <select id="f-doctor">
           <option value="">Не знаю — подберите</option>
           <option>Пискарев Михаил Валерьевич — психиатр</option>
@@ -228,12 +240,12 @@
           <option>Ашмейба Нино Анатольевна — психиатр-геронтолог</option>
           <option>Барков Станислав Сергеевич — клинический психолог</option>
         </select></div>
-<div class="fld"><label>Ваше имя <span style="color:var(--terra)">*</span></label><input id="f-name" required placeholder="Имя родителя или опекуна"></div>
+<div class="fld"><label for="f-name">Ваше имя <span style="color:var(--terra)">*</span></label><input id="f-name" autocomplete="name" required placeholder="Имя родителя или опекуна"></div>
       <div class="row2">
-        <div class="fld"><label>Телефон <span style="color:var(--terra)">*</span></label><input id="f-phone" required type="tel"></div>
-        <div class="fld"><label>E-mail (для подтверждения)</label><input id="f-email" type="email"></div>
+        <div class="fld"><label for="f-phone">Телефон <span style="color:var(--terra)">*</span></label><input id="f-phone" required type="tel" autocomplete="tel"></div>
+        <div class="fld"><label for="f-email">E-mail (для подтверждения)</label><input id="f-email" type="email" autocomplete="email"></div>
       </div>
-      <div class="fld"><label>О ребёнке</label><textarea id="f-comment" rows="3" placeholder="Имя и возраст ребёнка, что беспокоит (по желанию)"></textarea></div>
+      <div class="fld"><label for="f-comment">О ребёнке</label><textarea id="f-comment" rows="3" placeholder="Имя и возраст ребёнка, что беспокоит (по желанию)"></textarea></div>
       <div class="fld consent"><input type="checkbox" id="f-consent" required><label for="f-consent" style="font-weight:500">Согласен(а) на обработку персональных данных в целях записи. Данные защищены врачебной тайной и используются только для организации приёма.</label></div>
       <button class="btn btn-primary" type="submit" style="justify-content:center">Записаться</button>
     </div>
