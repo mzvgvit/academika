@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сравнение версий «Академики»</title>
+<meta name="description" content="Психологическое сравнение боевого сайта academicals.ru и локальной версии: критерии, вердикт, рекомендации.">
+<style>
+:root{
+  color-scheme: light;
+  --surface-1:#fcfcfb; --page:#f9f9f7;
+  --ink-1:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#eb6834;
+  --good:#006300;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --surface-1:#1a1a19; --page:#0d0d0d;
+    --ink-1:#f0efec; --ink-2:#c3c2b7;
+    --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
+    --s1:#3987e5; --s2:#d95926; --good:#0ca30c;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --surface-1:#1a1a19; --page:#0d0d0d;
+  --ink-1:#f0efec; --ink-2:#c3c2b7;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#d95926; --good:#0ca30c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink-1);
+  font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 16px 64px}
+header.masthead{margin-bottom:20px}
+h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:.1em 0 .2em}
+.sub{color:var(--ink-2);max-width:70ch;margin:0 0 8px}
+.meta{color:var(--muted);font-size:13px}
+section{background:var(--surface-1);border:1px solid var(--ring);border-radius:14px;
+  padding:20px;margin:16px 0}
+h2{font-size:20px;margin:0 0 4px}
+h2+.sub{font-size:14px;margin:0 0 16px}
+/* tiles */
+.tiles{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.tile{border:1px solid var(--ring);border-radius:12px;padding:14px 16px;background:var(--page)}
+.tile .k{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.tile .v{font-size:22px;font-weight:650;margin:2px 0}
+.tile .d{color:var(--ink-2);font-size:14px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin:2px 0 10px;font-size:14px;color:var(--ink-2)}
+.legend .sw{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+/* dumbbell */
+.chart{overflow-x:auto}
+.dumbbell svg{display:block;min-width:640px}
+.d-row-label{fill:var(--ink-1);font-size:13px}
+.d-note{fill:var(--muted);font-size:11.5px}
+.tip{position:fixed;pointer-events:none;background:var(--surface-1);border:1px solid var(--ring);
+  border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);padding:8px 10px;font-size:13px;
+  color:var(--ink-1);opacity:0;transition:opacity .12s;z-index:5;max-width:280px}
+.dot{cursor:pointer}
+.dot:hover{stroke:var(--ring);stroke-width:2}
+/* lists & table */
+ul.tight{margin:8px 0;padding-left:1.2em}
+ul.tight li{margin:.35em 0}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+th,td{text-align:left;padding:8px 10px;border-top:1px solid var(--grid);vertical-align:top}
+th{color:var(--ink-2);font-weight:600;font-size:13px}
+.sw1,.sw2{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:0}
+.sw1{background:var(--s1)} .sw2{background:var(--s2)}
+.quote{border-left:3px solid var(--grid);margin:10px 0;padding:2px 12px;color:var(--ink-2);font-size:14.5px}
+.quote b{color:var(--ink-1);font-weight:600}
+footer{color:var(--muted);font-size:13px;margin-top:24px}
+a{color:var(--s1)}
+@media (max-width:640px){ section{padding:16px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="masthead">
+  <div class="meta">Психологический разбор · 21 ноября 2026 · материалы: главная, услуги и прайс academicals.ru · главная, «Цены», «Детям» локальной версии</div>
+  <h1>«Академика»: боевой сайт против локального</h1>
+  <p class="sub">Две версии на одном каркасе (научная школа Смулевича, «без постановки на учёт», конфиденциальность), но с разными психологическими механизмами. Боевой сайт продаёт <b>институцию</b>, локальный — <b>доступ к помощи</b>. Ниже — разбор того, как каждая версия работает с психикой посетителя.</p>
+</header>
+
+<section>
+  <h2>Вердикт</h2>
+  <p class="sub">Оценки по 10-балльной шкале — экспертная интерпретация, не измерение.</p>
+  <div class="tiles">
+    <div class="tile"><div class="k">Боевой · academicals.ru</div>
+      <div class="v">Доверие через величие</div>
+      <div class="d">Наследие, экосистема, «опережаем стандарты вместе с теми, кто их создаёт». Сильно для холодного высокостатусного трафика. Барьер первого шага снижает слабо, цены всплывают внезапно.</div></div>
+    <div class="tile"><div class="k">Локальный · localhost:8087</div>
+      <div class="v">Доверие через заботу</div>
+      <div class="d">Рельеф страхов в заголовке и FAQ, триаж с честной рамкой, кризисный блок, детская страница на языке подростка. Сильнее на тёплом трафике, слабее передаёт масштаб школы.</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Критерии: где какая версия сильнее</h2>
+  <p class="sub">Ганттовая диаграмма: две оценки на критерий. Наведите на точку — подсказка.</p>
+  <div class="legend" aria-hidden="true">
+    <span><span class="sw" style="background:var(--s1)"></span>Боевой (academicals.ru)</span>
+    <span><span class="sw" style="background:var(--s2)"></span>Локальный (localhost:8087)</span>
+  </div>
+  <div class="chart dumbbell" id="db"></div>
+  <p class="d-note" style="padding-left:2px">Шкала 0–10 · «кризисная поддержка» у боевого сайта отсутствует как блок — условно 1 (просто телефон в шапке). Источник оценки — только видимый текст страниц.</p>
+</section>
+
+<section>
+  <h2>Тот же разбор таблицей</h2>
+  <table>
+    <thead><tr><th>Критерий</th><th><span class="sw1"></span>Боевой</th><th><span class="sw2"></span>Локальный</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Главные работы со страхами</h2>
+  <div class="quote"><b>Локальный, H1:</b> «Психиатрия и психотерапия в Москве — <b>без постановки на учёт</b>» — главный страх назван в первом экране, а не спрятан в блок преимуществ.</div>
+  <div class="quote"><b>Локальный, триаж:</b> «Это не диагноз — просто подсказка, кто из специалистов начнёт разбираться первым» — снимает страх «меня втиснут в диагноз по клику» и страх выбрать неправильно.</div>
+  <div class="quote"><b>Локальный, кризисный блок:</b> «Запись в клинику может подождать до завтра; <b>вы и ваши близкие — нет</b>» — отсылка к бесплатным службам вместо продажи; сильнейший ход обеих версий.</div>
+  <div class="quote"><b>Локальный, подросткам:</b> «О твоём визите не узнают ни школа, ни КДН, ни поликлиника» — прямой диалог с подростком на его страхе; у боевого такой аудитории нет отдельного адреса.</div>
+  <div class="quote"><b>Боевой, статусность:</b> «Получать помощь здесь — значит опережать стандарты вместе с теми, кто их создаёт» — тонкое возвышение клиента: не «отстающий больной», а «впереди системы».</div>
+</section>
+
+<section>
+  <h2>Чего локальная версия потеряла</h2>
+  <ul class="tight">
+    <li><b>Эмоция величия.</b> «Наследие, которое меняет будущее», трёхчленная модель «Discovery / Drugs &amp; Therapy / Dignity», масштаб экосистемы — авторитет переложен в факты, но образ стал суше и «дешевле».</li>
+    <li><b>Институциональная глубина</b> — компактность быстрее, но меньше возвышения клиента-статуса.</li>
+    <li><b>Риск контраста:</b> emoji-иконки (🧠🌿🫧) на фоне академического регистра читаются частью взрослых клиентов как «лайт».</li>
+    <li><b>Плотность CTA</b> (~20 кнопок «Записаться» на страницу) может дать тревожному читателю эффект давления, противоположный тону текстов.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Оптимальный путь — гибрид</h2>
+  <p class="sub">От боевого взять фасад, от локального — механику снятия барьеров. Пять переносов в порядке значимости:</p>
+  <ul class="tight">
+    <li>1. Кризисный блок «Если страшно прямо сейчас» на все страницы.</li>
+    <li>2. Триаж из трёх вопросов с честной рамкой «это не диагноз».</li>
+    <li>3. H1 «без постановки на учёт» и прямые ответы в FAQ.</li>
+    <li>4. подростковый раздел «что обычно пугает — и как на самом деле».</li>
+    <li>5. Цены в карточках направлений и «≈ за сеанс» на прайсе.</li>
+  </ul>
+</section>
+
+<footer>
+  Оценки — интерпретация текстов сайтов с позиции психологии обращения за психиатрической помощью; данные собраны 21.11.2026. Локальная версия — реализация сайта клиники; на GitHub Pages запись онлайн отключена (нужен backend: <code>python3 server.py</code>). Дашборд можно запускать офлайн, данные в страницу не отправляются.
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA=[
+ {c:"Снятие страха учёта и огласки", a:6, b:10,
+  na:"«без постановки на учёт» в блоке преимуществ",
+  nb:"H1, FAQ с врачебной тайной, подростковый раздел"},
+ {c:"Снижение барьера первого шага", a:5, b:9,
+  na:"описан первый приём, координатор",
+  nb:"«запись меньше минуты», триаж, координатор"},
+ {c:"Авторитет и статусность", a:9, b:6,
+  na:"школа, экосистема, «опережаем стандарты»",
+  nb:"факты школы есть, эмоции величия меньше"},
+ {c:"Прозрачность цен", a:3, b:8,
+  na:"прайс отдельно, без контекста",
+  nb:"«от 10 000 ₽» в карточках, «≈ ₽/сеанс»"},
+ {c:"Работа с детьми и подростками", a:3, b:9,
+  na:"общие упоминания детского приёма",
+  nb:"отдельная страница: страхи, конфиденциальность, интерактив"},
+ {c:"Кризисная поддержка", a:1, b:10,
+  na:"только телефон в шапке",
+  nb:"блок «Если страшно прямо сейчас», телефоны доверия"},
+ {c:"Конверсионная механика", a:5, b:9,
+  na:"CTA «Записаться онлайн / Заказать звонок»",
+  nb:"CTA в каждом блоке, 4-шаговая форма, выбор врача"},
+ {c:"Ясность для тревожного читателя", a:5, b:8,
+  na:"академический регистр, англицизмы",
+  nb:"бытовой язык симптомов, микро-объяснения"},
+];
+(function(){
+  const W=760,H=DATA.length*46+64,L=250,R=54,SC=(W-L-R)/10;
+  const y=i=>34+i*46, x=v=>L+v*SC;
+  const svgNS="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(svgNS,"svg");
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  svg.setAttribute("width","100%"); svg.setAttribute("role","img");
+  svg.setAttribute("aria-label","Сравнение версий по критериям, шкала 0–10");
+  let g="";
+  // gridlines 0..10
+  for(let t=0;t<=10;t+=2){
+    const px=x(t);
+    g+=`<line x1="${px}" y1="18" x2="${px}" y2="${H-22}" stroke="var(--grid)" stroke-width="1"/>`;
+    g+=`<text x="${px}" y="${H-6}" fill="var(--muted)" font-size="11" text-anchor="middle">${t}</text>`;
+  }
+  DATA.forEach((d,i)=>{
+    const lo=Math.min(d.a,d.b), hi=Math.max(d.a,d.b);
+    g+=`<text class="d-row-label" x="8" y="${y(i)-6}">${d.c}</text>`;
+    g+=`<line x1="${x(lo)}" y1="${y(i)}" x2="${x(hi)}" y2="${y(i)}" stroke="var(--axis)" stroke-width="2"/>`;
+    g+=`<circle class="dot" data-tip="<b>${d.c} · боевой:</b> ${d.a}/10 — ${d.na}"
+        cx="${x(d.a)}" cy="${y(i)}" r="8" fill="var(--s1)"><title>${d.c}: боевой ${d.a}/10</title></circle>`;
+    g+=`<circle class="dot" data-tip="<b>${d.c} · локальный:</b> ${d.b}/10 — ${d.nb}"
+        cx="${x(d.b)}" cy="${y(i)}" r="8" fill="var(--s2)"><title>${d.c}: локальный ${d.b}/10</title></circle>`;
+  });
+  svg.innerHTML=g;
+  document.getElementById("db").appendChild(svg);
+  const tip=document.getElementById("tip");
+  document.querySelectorAll(".dot").forEach(el=>{
+    el.addEventListener("mousemove",e=>{
+      tip.innerHTML=el.dataset.tip;
+      tip.style.left=(e.clientX+14)+"px"; tip.style.top=(e.clientY+14)+"px";
+      tip.style.opacity=1;
+    });
+    el.addEventListener("mouseleave",()=>tip.style.opacity=0);
+  });
+  // table view = accessibility fallback
+  document.getElementById("tbody").innerHTML=DATA.map(d=>
+    `<tr><td>${d.c}</td><td><b>${d.a}</b> — ${d.na}</td><td><b>${d.b}</b> — ${d.nb}</td></tr>`).join("");
+})();
+</script>
+</body>
+</html>

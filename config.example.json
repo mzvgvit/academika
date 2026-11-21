@@ -1,0 +1,10 @@
+{
+  "_комментарий": "Скопируйте в config.json и заполните. Без smtp_host письма копятся в outbox/ (.eml) — можно переслать вручную.",
+  "_как_получить_пароль": "для Gmail/Яндекс нужен пароль приложения (не основной): Gmail — https://myaccount.google.com/apppasswords, Яндекс — security.yandex.ru «Пароли приложений»",
+  "smtp_host": "",
+  "smtp_port": 587,
+  "smtp_user": "",
+  "smtp_pass": "",
+  "from_email": "site@your-domain.ru",
+  "notify_email": "info@academicals.ru"
+}
