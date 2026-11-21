@@ -131,9 +131,66 @@
     });
   }
 
+  function today() { var d = new Date(); var p = function (x) { return (x < 10 ? "0" : "") + x; }; return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()); }
   // ---- слоты ----
   var dateInput = document.getElementById("f-date");
-  function today() { var d = new Date(); var p = function (x) { return (x < 10 ? "0" : "") + x; }; return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()); }
+  var SLOTS = ["9:00", "10:30", "12:00", "13:30", "15:00", "16:30", "18:00", "19:00"];
+  var OFFLINE = false; // становится true, когда /api/slots недоступен (статический хостинг)
+  function localBookings() {
+    try { return JSON.parse(localStorage.getItem("aka-bookings") || "[]"); } catch (e) { return []; }
+  }
+  function dayDate(offset) {
+    var d = new Date(); d.setDate(d.getDate() + offset);
+    var p = function (x) { return (x < 10 ? "0" : "") + x; };
+    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+  }
+  function nextFreeDay() {
+    var b = localBookings();
+    for (var i = 1; i <= 14; i++) {
+      var d = dayDate(i);
+      if (!b.some(function (x) { return x.date === d; })) return d;
+    }
+    return "";
+  }
+  function renderSlotList(list, box, next) {
+    box.innerHTML = "";
+    if (!list.length) {
+      var note = document.createElement("div");
+      note.style.cssText = "grid-column:1/-1;color:var(--ink-soft);font-size:.9rem";
+      var when = next && next !== dateInput.value ? new Date(next).toLocaleDateString("ru-RU", { weekday: "short", day: "numeric", month: "long" }) : "";
+      note.innerHTML = "На эту дату свободного времени нет." + (when ? " Ближайшее: <b>" + when + "</b>." : "");
+      box.appendChild(note);
+      if (next) {
+        var jump = document.createElement("button");
+        jump.type = "button"; jump.className = "btn btn-ghost"; jump.style.padding = "10px 18px";
+        jump.textContent = "Взять ближайший день";
+        jump.addEventListener("click", function () { dateInput.value = next; loadSlots(); });
+        box.appendChild(jump);
+      }
+      return;
+    }
+    list.forEach(function (t) {
+      var b = document.createElement("button");
+      b.type = "button"; b.textContent = t;
+      if (t === data.time) b.classList.add("sel");
+      b.addEventListener("click", function () {
+        data.time = t;
+        box.querySelectorAll("button").forEach(function (x) { x.classList.remove("sel"); });
+        b.classList.add("sel");
+        track("slot_selected", { date: dateInput.value, time: t, service: data.service });
+        show(3);
+      });
+      box.appendChild(b);
+    });
+  }
+  function localSlots() {
+    var box = document.getElementById("slot-list");
+    if (!box) return;
+    var d = dateInput.value;
+    var busy = {};
+    localBookings().forEach(function (b) { if (b.date === d) busy[b.time] = 1; });
+    renderSlotList(SLOTS.filter(function (t) { return !busy[t]; }), box, nextFreeDay());
+  }
   function loadSlots() {
     if (!dateInput || !dateInput.value) {
       dateInput.value = today();
@@ -141,37 +198,12 @@
     var box = document.getElementById("slot-list");
     box.innerHTML = "<span style='color:var(--ink-soft);font-size:.85rem'>Загружаю время…</span>";
     fetch("/api/slots?date=" + dateInput.value).then(function (r) { return r.json(); }).then(function (j) {
-      box.innerHTML = "";
       if (!j.slots) { box.textContent = "Не удалось получить слоты — позвоните нам: +7 (495) 120-02-62"; return; }
-      if (!j.slots.length) {
-        var note = document.createElement("div");
-        note.style.cssText = "grid-column:1/-1;color:var(--ink-soft);font-size:.9rem";
-        var when = j.next && j.next !== dateInput.value ? new Date(j.next).toLocaleDateString("ru-RU", { weekday: "short", day: "numeric", month: "long" }) : "";
-        note.innerHTML = "На эту дату свободного времени нет." + (when ? " Ближайшее: <b>" + when + "</b>." : "");
-        box.appendChild(note);
-        if (j.next) {
-          var jump = document.createElement("button");
-          jump.type = "button"; jump.className = "btn btn-ghost"; jump.style.padding = "10px 18px";
-          jump.textContent = "Взять ближайший день";
-          jump.addEventListener("click", function () { dateInput.value = j.next; loadSlots(); });
-          box.appendChild(jump);
-        }
-        return;
-      }
-      j.slots.forEach(function (t) {
-        var b = document.createElement("button");
-        b.type = "button"; b.textContent = t;
-        if (t === data.time) b.classList.add("sel");
-        b.addEventListener("click", function () {
-          data.time = t;
-          box.querySelectorAll("button").forEach(function (x) { x.classList.remove("sel"); });
-          b.classList.add("sel");
-          track("slot_selected", { date: dateInput.value, time: t, service: data.service });
-          show(3);
-        });
-        box.appendChild(b);
-      });
-    }).catch(function () { box.textContent = "Ошибка сети — позвоните нам: +7 (495) 120-02-62"; });
+      renderSlotList(j.slots, box, j.next || "");
+    }).catch(function () {
+      OFFLINE = true;
+      localSlots();
+    });
   }
   if (dateInput) {
     dateInput.min = today();
@@ -221,12 +253,70 @@
           setTimeout(function () { modal.close(); }, 12000);
         })
         .catch(function () {
-          msg.className = "form-msg err";
-          msg.textContent = "Ошибка сети. Позвоните: +7 (495) 120-02-62";
-          track("booking_result", { status: "error", error: "network", attempt: attempt });
+          offlineSubmit(attempt, btn);
         })
         .finally(function () { if (btn && !btn.hidden) { btn.disabled = false; btn.textContent = "Записаться"; } });
     });
+  }
+
+  // ---- офлайн-отправка (статический хостинг): запись в браузере + письмо клинике ----
+  function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
+  function b64utf8(s) { return btoa(unescape(encodeURIComponent(s))); }
+  function bookingText() {
+    return [
+      "Кому: " + data.who,
+      "Услуга: " + data.service,
+      "Врач: " + (data.doctor || "не указан"),
+      "Дата и время: " + data.date + ", " + data.time,
+      "Имя: " + data.name,
+      "Телефон: " + data.phone,
+      "E-mail: " + (data.email || "—"),
+      "Комментарий: " + (data.comment || "—"),
+      "Согласие на обработку персональных данных: да",
+    ].join("\n");
+  }
+  function offlineSubmit(attempt, btn) {
+    if (step !== 3) return;
+    if (!data.name || !data.phone || !data.consent) {
+      msg.className = "form-msg err";
+      msg.textContent = "Заполните имя, телефон и согласие — и повторите отправку.";
+      return;
+    }
+    var all = localBookings();
+    var clash = all.some(function (b) { return b.date === data.date && b.time === data.time; });
+    if (clash) {
+      msg.className = "form-msg err";
+      msg.textContent = "Это время уже занято в этом браузере. Выберите другое.";
+      show(2);
+      return;
+    }
+    all.push({
+      created: new Date().toISOString(), date: data.date, time: data.time,
+      who: data.who, service: data.service, age: data.age, doctor: data.doctor,
+      name: data.name, phone: data.phone, email: data.email, comment: data.comment,
+    });
+    try { localStorage.setItem("aka-bookings", JSON.stringify(all)); } catch (e) { /* приватный режим — запись не сохранится локально */ }
+    track("booking_result", { status: "offline_saved", service: data.service, date: data.date, time: data.time, attempt: attempt });
+    var mailto = "mailto:info@academicals.ru?subject=" + encodeURIComponent("Запись: " + data.date + " " + data.time + " — " + (data.name || "")) + "&body=" + encodeURIComponent(bookingText());
+    var eml = [
+      "From: booking@pages.local",
+      "To: info@academicals.ru",
+      "Subject: =?UTF-8?B?" + b64utf8("Запись: " + data.date + " " + data.time + " — " + (data.service || "")) + "?=",
+      "Date: " + new Date().toUTCString(),
+      "MIME-Version: 1.0",
+      "Content-Type: text/plain; charset=UTF-8",
+      "",
+      bookingText() + "\n\n(Письмо сформировано на статической версии сайта при недоступном сервере записи.)",
+    ].join("\r\n");
+    msg.className = "form-msg ok";
+    msg.innerHTML =
+      "<b>Записаны: " + esc(data.date) + " в " + esc(data.time) + "</b><br>" +
+      "ул. Трубная, 29, стр. 6 · Москва<br>" +
+      "Это статическая версия сайта: запись сохранена в этом браузере, но клиника её ещё не видит. Передайте её любым способом:<br>" +
+      "<a href=\"" + esc(mailto) + "\">✉️ Отправить письмом</a> — откроется почтовая программа с готовым письмом на info@academicals.ru,<br>" +
+      "<a href=\"data:text/plain;charset=utf-8," + encodeURIComponent(eml) + "\" download=\"zapis-" + esc(data.date) + ".eml\">📄 Скачать письмо (.eml)</a> — переслать по своей почте,<br>" +
+      "или позвоните: +7 (495) 120-02-62.";
+    if (btn) btn.hidden = true;
   }
 
   document.querySelectorAll("[data-back]").forEach(function (b) {
